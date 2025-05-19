@@ -1,7 +1,9 @@
 #include "SyntaxAnalyse.hpp"
 #include "cstring"
+#include "ast.hpp"  // 添加缺少的头文件
 
 extern ast::SyntaxTree syntax_tree;
+
 void SyntaxAnalyseCompUnit(ast::compunit_syntax * &self, ast::compunit_syntax *compunit, ast::func_def_syntax *func_def)
 {
     if(compunit){
@@ -69,7 +71,7 @@ void SynataxAnalysePrimaryExpIntConst(ast::expr_syntax *&self, char *current_sym
     syntax->intConst = std::stoi(current_symbol);
     self = static_cast<ast::expr_syntax*>(syntax);
 }
-//a-难度
+
 void SynataxAnalyseStmtBlock(ast::stmt_syntax *&self, ast::block_syntax *block)
 {
     auto syntax = new ast::block_syntax;
@@ -136,7 +138,7 @@ void SynataxAnalyseAddExp(ast::expr_syntax *&self, ast::expr_syntax *exp1, char 
     }
     self = static_cast<ast::expr_syntax*>(syntax);
 }
-//a难度
+
 void SynataxAnalyseMulExp(ast::expr_syntax *&self, ast::expr_syntax *exp1, char *op, ast::expr_syntax *exp2)
 {
     auto syntax = new ast::binop_expr_syntax;
@@ -165,7 +167,7 @@ void SynataxAnalyseLval(ast::lval_syntax *&self, char *ident)
     self = new ast::lval_syntax;
     self->name = ident;
 }
-//a+难度
+
 void SynataxAnalyseStmtIf(ast::stmt_syntax *&self, ast::expr_syntax *cond, ast::stmt_syntax *then_body, ast::stmt_syntax *else_body)
 {
     auto syntax = new ast::if_stmt_syntax;
@@ -184,7 +186,7 @@ void SynataxAnalyseLOrExp(ast::expr_syntax *&self, ast::expr_syntax *cond1, ast:
     auto syntax = new ast::logic_cond_syntax;
     syntax->lhs = std::shared_ptr<ast::expr_syntax>(cond1);
     syntax->rhs = std::shared_ptr<ast::expr_syntax>(cond2);
-    syntax->op = ast::relop::op_or;
+    syntax->op = ast::relop::op_or;  // 确保ast命名空间正确
     self = static_cast<ast::expr_syntax*>(syntax);
 }
 
@@ -193,7 +195,7 @@ void SynataxAnalyseLAndExp(ast::expr_syntax *&self, ast::expr_syntax *cond1, ast
     auto syntax = new ast::logic_cond_syntax;
     syntax->lhs = std::shared_ptr<ast::expr_syntax>(cond1);
     syntax->rhs = std::shared_ptr<ast::expr_syntax>(cond2);
-    syntax->op = ast::relop::op_and;
+    syntax->op = ast::relop::op_and;  // 确保ast命名空间正确
     self = static_cast<ast::expr_syntax*>(syntax);
 }
 
@@ -209,7 +211,6 @@ void SynataxAnalyseEqExp(ast::expr_syntax *&self, ast::expr_syntax *cond1, char 
     }
     self = static_cast<ast::expr_syntax*>(syntax);
 }
-
 
 void SynataxAnalyseRelExp(ast::expr_syntax *&self, ast::expr_syntax *cond1, char *op, ast::expr_syntax *exp)
 {
@@ -233,11 +234,11 @@ void SynataxAnalyseUnaryExp(ast::expr_syntax *&self, char *op, ast::expr_syntax 
     auto syntax = new ast::unaryop_expr_syntax;
     syntax->rhs = std::shared_ptr<ast::expr_syntax>(exp);
     if (!strcmp(op, "+")) {
-        syntax->op = ast::unaryop::plus;
+        syntax->op = ast::unaryop::plus;  // 确保ast命名空间正确
     } else if (!strcmp(op, "-")) {
-        syntax->op = ast::unaryop::minus;
+        syntax->op = ast::unaryop::minus;  // 确保ast命名空间正确
     } else if (!strcmp(op, "!")) {
-        syntax->op = ast::unaryop::op_not;
+        syntax->op = ast::unaryop::op_not;  // 确保ast命名空间正确
     }
     self = static_cast<ast::expr_syntax*>(syntax);
 }
